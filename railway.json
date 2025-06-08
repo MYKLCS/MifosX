@@ -1,0 +1,53 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "sleepApplication": false,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  },
+  "environments": {
+    "production": {
+      "variables": {
+        "NODE_ENV": "production",
+        "FINERACT_BASE_URL": "https://your-fineract-production.railway.app/fineract-provider",
+        "FINERACT_TENANT_IDENTIFIER": "default",
+        "DEFAULT_LANGUAGE": "en-US",
+        "SUPPORTED_LANGUAGES": "en-US,es-MX,fr-FR,pt-PT,sw-SW,lt-LT,lv-LV",
+        "ALLOW_SERVER_SWITCHING": "false",
+        "PRELOAD_CLIENTS_ON_LOGIN": "true",
+        "DEFAULT_THEME": "default",
+        "ENABLE_MULTITENANT": "false",
+        "DEMO_CREDENTIALS_ENABLED": "false",
+        "PASSWORD_VALIDATION_ENABLED": "true",
+        "OAUTH_ENABLED": "false",
+        "SELF_SERVICE_ENABLED": "true",
+        "SHOW_LANGUAGE_SELECTOR": "true",
+        "SHOW_THEME_PICKER": "true"
+      }
+    },
+    "staging": {
+      "variables": {
+        "NODE_ENV": "staging",
+        "FINERACT_BASE_URL": "https://your-fineract-staging.railway.app/fineract-provider",
+        "FINERACT_TENANT_IDENTIFIER": "default",
+        "DEFAULT_LANGUAGE": "en-US",
+        "SUPPORTED_LANGUAGES": "en-US,es-MX,fr-FR,pt-PT,sw-SW,lt-LT,lv-LV",
+        "ALLOW_SERVER_SWITCHING": "true",
+        "PRELOAD_CLIENTS_ON_LOGIN": "false",
+        "DEFAULT_THEME": "default",
+        "ENABLE_MULTITENANT": "false",
+        "DEMO_CREDENTIALS_ENABLED": "false",
+        "PASSWORD_VALIDATION_ENABLED": "true",
+        "OAUTH_ENABLED": "false",
+        "SELF_SERVICE_ENABLED": "true",
+        "SHOW_LANGUAGE_SELECTOR": "true",
+        "SHOW_THEME_PICKER": "true"
+      }
+    }
+  }
+}
