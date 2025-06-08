@@ -5,6 +5,7 @@ Use this checklist to ensure your Railway deployment is properly configured.
 ## ✅ Pre-Deployment Checklist
 
 ### Railway Platform Setup
+
 - [ ] Railway account created and verified
 - [ ] Railway CLI installed (`npm install -g @railway/cli`)
 - [ ] Logged in to Railway (`railway login`)
@@ -13,11 +14,13 @@ Use this checklist to ensure your Railway deployment is properly configured.
 - [ ] Project IDs noted for GitHub secrets
 
 ### GitHub Repository Setup
+
 - [ ] Repository has Railway deployment files committed
 - [ ] GitHub Actions enabled for the repository
 - [ ] Repository secrets configured (see below)
 
 ### Required GitHub Secrets
+
 - [ ] `RAILWAY_TOKEN` - Your Railway API token
 - [ ] `RAILWAY_PRODUCTION_PROJECT_ID` - Production project ID
 - [ ] `RAILWAY_PRODUCTION_SERVICE_ID` - Production service ID (if using specific service)
@@ -25,6 +28,7 @@ Use this checklist to ensure your Railway deployment is properly configured.
 - [ ] `RAILWAY_STAGING_SERVICE_ID` - Staging service ID (if using specific service)
 
 ### Fineract Backend Setup
+
 - [ ] Fineract backend deployed and running on Railway
 - [ ] PostgreSQL database configured and connected to Fineract
 - [ ] Fineract API endpoints accessible
@@ -34,6 +38,7 @@ Use this checklist to ensure your Railway deployment is properly configured.
 ## ✅ Environment Configuration
 
 ### Production Environment Variables (Railway Dashboard)
+
 - [ ] `NODE_ENV=production`
 - [ ] `FINERACT_BASE_URL=https://your-fineract-production.railway.app/fineract-provider`
 - [ ] `FINERACT_TENANT_IDENTIFIER=default`
@@ -51,6 +56,7 @@ Use this checklist to ensure your Railway deployment is properly configured.
 - [ ] `SHOW_THEME_PICKER=true`
 
 ### Staging Environment Variables (Railway Dashboard)
+
 - [ ] `NODE_ENV=staging`
 - [ ] `FINERACT_BASE_URL=https://your-fineract-staging.railway.app/fineract-provider`
 - [ ] `FINERACT_TENANT_IDENTIFIER=default`
@@ -60,29 +66,34 @@ Use this checklist to ensure your Railway deployment is properly configured.
 ## ✅ Deployment Files
 
 ### GitHub Actions Workflow
+
 - [ ] `.github/workflows/deploy-railway.yml` exists
 - [ ] Workflow triggers on correct branches (main, develop)
 - [ ] Test and security jobs configured
 - [ ] Environment-specific deployment jobs configured
 
 ### Railway Configuration
+
 - [ ] `railway.json` exists and configured
 - [ ] Docker build settings correct
 - [ ] Environment-specific variables defined
 - [ ] Deployment settings appropriate
 
 ### Scripts
+
 - [ ] `scripts/deploy-railway.sh` exists and is executable
 - [ ] Script has proper environment handling
 - [ ] Error handling implemented
 
 ### Documentation
+
 - [ ] `RAILWAY_DEPLOYMENT.md` exists with complete setup instructions
 - [ ] This checklist (`RAILWAY_SETUP_CHECKLIST.md`) exists
 
 ## ✅ Testing and Validation
 
 ### Local Testing
+
 - [ ] Application builds successfully (`npm run build`)
 - [ ] Tests pass (`npm run test`)
 - [ ] Linting passes (`npm run lint`)
@@ -90,6 +101,7 @@ Use this checklist to ensure your Railway deployment is properly configured.
 - [ ] Docker container runs (`docker run -p 8080:80 mifos-x-test`)
 
 ### Connectivity Testing
+
 - [ ] Can reach Fineract backend from local environment
 - [ ] API endpoints return expected responses
 - [ ] Authentication flow works
@@ -98,6 +110,7 @@ Use this checklist to ensure your Railway deployment is properly configured.
 ## ✅ First Deployment
 
 ### Staging Deployment
+
 - [ ] Push to `develop` branch triggers staging deployment
 - [ ] GitHub Actions workflow completes successfully
 - [ ] Application accessible on Railway staging URL
@@ -105,6 +118,7 @@ Use this checklist to ensure your Railway deployment is properly configured.
 - [ ] Basic functionality tested
 
 ### Production Deployment
+
 - [ ] Push to `main` branch triggers production deployment
 - [ ] GitHub Actions workflow completes successfully
 - [ ] Application accessible on Railway production URL
@@ -114,18 +128,21 @@ Use this checklist to ensure your Railway deployment is properly configured.
 ## ✅ Post-Deployment
 
 ### Monitoring Setup
+
 - [ ] Railway dashboard monitoring configured
 - [ ] Application logs accessible and readable
 - [ ] Performance metrics being tracked
 - [ ] Error reporting configured (if desired)
 
 ### Domain Configuration (Optional)
+
 - [ ] Custom domain configured in Railway
 - [ ] SSL certificate properly configured
 - [ ] DNS records updated
 - [ ] Domain accessible and secure
 
 ### Security Review
+
 - [ ] All sensitive data stored as environment variables
 - [ ] No hardcoded secrets in code
 - [ ] CORS properly configured
@@ -135,12 +152,14 @@ Use this checklist to ensure your Railway deployment is properly configured.
 ## ✅ Operational Procedures
 
 ### Deployment Process
+
 - [ ] Team understands branch-based deployment
 - [ ] Code review process in place
 - [ ] Testing procedures documented
 - [ ] Rollback procedures documented
 
 ### Monitoring and Maintenance
+
 - [ ] Log monitoring procedures established
 - [ ] Performance monitoring in place
 - [ ] Update procedures documented
@@ -151,16 +170,19 @@ Use this checklist to ensure your Railway deployment is properly configured.
 ### Common Issues and Solutions
 
 1. **Build Failures**
+
    - Check Node.js version (should be 22.9.0)
    - Verify all dependencies installed
    - Review build logs in Railway dashboard
 
 2. **Deployment Failures**
+
    - Check GitHub secrets are correctly set
    - Verify Railway project IDs are correct
    - Review GitHub Actions logs
 
 3. **Application Not Loading**
+
    - Check Railway service status
    - Verify environment variables are set
    - Review application logs
@@ -171,6 +193,7 @@ Use this checklist to ensure your Railway deployment is properly configured.
    - Test API endpoints directly
 
 ### Getting Help
+
 - Railway documentation: https://docs.railway.app/
 - Railway community: https://railway.app/help
 - GitHub Actions documentation: https://docs.github.com/en/actions
@@ -179,6 +202,7 @@ Use this checklist to ensure your Railway deployment is properly configured.
 ---
 
 ## Notes
+
 - Complete this checklist before attempting deployment
 - Keep this checklist updated as your setup evolves
 - Share with team members involved in deployment

@@ -5,6 +5,7 @@ This guide covers deploying the Mifos X Web Application (Angular frontend for Fi
 ## Overview
 
 The Mifos X Web App is deployed to Railway with the following setup:
+
 - **Frontend**: Angular 17 application serving Fineract 1x UI
 - **Backend Connection**: Connects to Fineract backend running on Railway
 - **Database**: Fineract connects to PostgreSQL database on Railway
@@ -22,11 +23,12 @@ The Mifos X Web App is deployed to Railway with the following setup:
 ### 2. Railway Setup
 
 1. **Create Railway Projects**:
+
    ```bash
    # Production environment
    railway login
    railway new mifos-x-production
-   
+
    # Staging environment
    railway new mifos-x-staging
    ```
@@ -43,6 +45,7 @@ The Mifos X Web App is deployed to Railway with the following setup:
 Configure these variables in your Railway dashboard:
 
 #### Required Variables
+
 ```
 NODE_ENV=production
 FINERACT_BASE_URL=https://your-fineract.railway.app/fineract-provider
@@ -50,6 +53,7 @@ FINERACT_TENANT_IDENTIFIER=default
 ```
 
 #### Optional UI Configuration
+
 ```
 DEFAULT_LANGUAGE=en-US
 SUPPORTED_LANGUAGES=en-US,es-MX,fr-FR,pt-PT,sw-SW,lt-LT,lv-LV
@@ -70,6 +74,7 @@ SHOW_THEME_PICKER=true
 ### Automatic Deployment
 
 Deployments are triggered automatically:
+
 - **Staging**: Push to `develop` branch → deploys to staging environment
 - **Production**: Push to `main` branch → deploys to production environment
 
@@ -94,13 +99,17 @@ railway up
 ## Configuration Files
 
 ### railway.json
+
 The `railway.json` file configures:
+
 - Docker build settings using the existing Dockerfile
 - Environment-specific variables
 - Deployment settings and restart policies
 
 ### GitHub Actions Workflow
+
 `.github/workflows/deploy-railway.yml` handles:
+
 - Automated testing before deployment
 - Security auditing with npm audit
 - Environment-specific deployments
@@ -109,10 +118,12 @@ The `railway.json` file configures:
 ## Fineract Backend Integration
 
 The frontend connects to Fineract backend via:
+
 - `FINERACT_BASE_URL`: Full URL to Fineract API endpoint
 - `FINERACT_TENANT_IDENTIFIER`: Tenant identifier (usually 'default')
 
 Ensure your Fineract backend is properly configured with:
+
 - CORS settings allowing your frontend domain
 - Proper authentication mechanisms
 - Database connectivity to PostgreSQL
@@ -120,12 +131,14 @@ Ensure your Fineract backend is properly configured with:
 ## Environment Configuration
 
 ### Production Environment
+
 - Uses `main` branch
 - Connects to production Fineract instance
 - Server switching disabled for security
 - Optimized for performance
 
 ### Staging Environment
+
 - Uses `develop` branch
 - Connects to staging Fineract instance
 - Server switching enabled for testing
@@ -134,12 +147,14 @@ Ensure your Fineract backend is properly configured with:
 ## Monitoring and Logs
 
 ### Railway Dashboard
+
 - View deployment status
 - Monitor application logs
 - Check resource usage
 - Manage environment variables
 
 ### GitHub Actions
+
 - Build and deployment logs
 - Test results
 - Security audit reports
@@ -149,11 +164,13 @@ Ensure your Fineract backend is properly configured with:
 ### Common Issues
 
 1. **Build Failures**
+
    - Check Node.js version compatibility (22.9.0)
    - Verify all dependencies are installed
    - Review build logs in Railway dashboard
 
 2. **Fineract Connection Issues**
+
    - Verify `FINERACT_BASE_URL` is correct
    - Check CORS configuration on Fineract backend
    - Ensure Fineract backend is running and accessible
@@ -166,11 +183,13 @@ Ensure your Fineract backend is properly configured with:
 ### Debug Steps
 
 1. **Check Application Logs**:
+
    ```bash
    railway logs
    ```
 
 2. **Verify Environment Variables**:
+
    ```bash
    railway variables
    ```
@@ -192,6 +211,7 @@ Ensure your Fineract backend is properly configured with:
 ## Support
 
 For deployment issues:
+
 1. Check Railway dashboard logs
 2. Review GitHub Actions workflow logs
 3. Verify Fineract backend connectivity
@@ -200,6 +220,7 @@ For deployment issues:
 ## Next Steps
 
 After successful deployment:
+
 1. Configure custom domain (optional)
 2. Set up monitoring and alerts
 3. Configure backup strategies
