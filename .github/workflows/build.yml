@@ -50,11 +50,11 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist/web-app
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: dist/web-app
           #without preserve it only builds if you have untracked files
-          PRESERVE: true
+          clean: false
           # github user name and email shows up in the logs,
           # so it would be better to make it silent.
-          SILENT: true
+          silent: true

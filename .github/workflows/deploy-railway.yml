@@ -12,7 +12,6 @@ on:
 
 env:
   NODE_VERSION: '22.9.0'
-  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
 jobs:
   test:
@@ -69,6 +68,14 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
+      - name: Check Railway secrets
+        run: |
+          if [ -z "${{ secrets.RAILWAY_TOKEN }}" ]; then
+            echo "⚠️ Railway secrets not configured. Skipping deployment."
+            echo "Please configure RAILWAY_TOKEN and project secrets in repository settings."
+            exit 0
+          fi
+
       - name: Deploy to Railway Staging
         run: |
           railway login --token ${{ secrets.RAILWAY_TOKEN }}
@@ -88,6 +95,14 @@ jobs:
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli
+
+      - name: Check Railway secrets
+        run: |
+          if [ -z "${{ secrets.RAILWAY_TOKEN }}" ]; then
+            echo "⚠️ Railway secrets not configured. Skipping deployment."
+            echo "Please configure RAILWAY_TOKEN and project secrets in repository settings."
+            exit 0
+          fi
 
       - name: Deploy to Railway Production
         run: |
