@@ -1,5 +1,9 @@
 # Mifos X Web App ![build](https://github.com/openMF/web-app/actions/workflows/build.yml/badge.svg)
 
+[![Railway Deploy](https://railway.app/button.svg)](https://railway.app/project/71e46957-dc0f-4e52-80ba-f1edb3e11666)
+
+🚀 **Live Deployment**: [https://mifosx-production.up.railway.app](https://mifosx-production.up.railway.app)
+
 ## Overview
 
 Mifos X Web App is a modern single-page application (SPA) built on top of the Mifos X platform for financial inclusion. It serves as the default web interface for the Mifos user community.
