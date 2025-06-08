@@ -141,7 +141,10 @@ export class TransactionsTabComponent implements OnInit {
 
     if (hideAccrual || hideReversed) {
       transactions = this.transactionsData.filter((t: LoanTransaction) => {
-        return !(hideReversed && t.manuallyReversed) && !(hideAccrual && t.type.accrual);
+        return (
+          !(hideReversed && t.manuallyReversed) &&
+          !(hideAccrual && (t.type.accrual || t.type.capitalizedIncomeAmortization))
+        );
       });
     }
     this.dataSource = new MatTableDataSource(transactions);
@@ -160,6 +163,16 @@ export class TransactionsTabComponent implements OnInit {
   /**
    * Show Transactions Details
    * @param transactionsData Transactions Data
+   */
+  showTransactions(transactionsData: LoanTransaction) {
+    if (this.showTransaction(transactionsData)) {
+      this.router.navigate([transactionsData.id], { relativeTo: this.route });
+    }
+  }
+
+  /**
+   * Show Transaction Details
+   * @param transactionsData Transaction Data
    * DISBURSEMENT:1
    * REPAYMENT:2
    * WAIVE_INTEREST:4
@@ -182,29 +195,29 @@ export class TransactionsTabComponent implements OnInit {
    * REAMORTIZE:30
    * INTEREST REFUND:33
    * CAPITALIZED INCOME:35
+   * CAPITALIZED INCOME ADJUSTMENT:37
    * CONTRACT_TERMINATION:90
    */
-  showTransactions(transactionsData: LoanTransaction) {
-    if ([
-        1,
-        2,
-        4,
-        9,
-        20,
-        21,
-        22,
-        23,
-        26,
-        28,
-        29,
-        30,
-        31,
-        33,
-        35,
-        90
-      ].includes(transactionsData.type.id)) {
-      this.router.navigate([transactionsData.id], { relativeTo: this.route });
-    }
+  showTransaction(transactionsData: LoanTransaction): boolean {
+    return [
+      1,
+      2,
+      4,
+      9,
+      20,
+      21,
+      22,
+      23,
+      26,
+      28,
+      29,
+      30,
+      31,
+      33,
+      35,
+      37,
+      90
+    ].includes(transactionsData.type.id);
   }
 
   allowUndoTransaction(transaction: LoanTransaction) {
@@ -226,7 +239,7 @@ export class TransactionsTabComponent implements OnInit {
     if (transaction.transactionRelations && transaction.transactionRelations.length > 0) {
       return 'linked';
     }
-    if (this.isAccrual(transaction.type)) {
+    if (this.isAccrual(transaction.type) || this.isCapitalizedIncomeAmortization(transaction.type)) {
       return 'accrual';
     }
     if (this.isChargeOff(transaction.type)) {
@@ -346,6 +359,13 @@ export class TransactionsTabComponent implements OnInit {
 
   private isCapitalizedIncome(transactionType: LoanTransactionType): boolean {
     return transactionType.capitalizedIncome || transactionType.code === 'loanTransactionType.capitalizedIncome';
+  }
+
+  private isCapitalizedIncomeAmortization(transactionType: LoanTransactionType): boolean {
+    return (
+      transactionType.capitalizedIncomeAmortization ||
+      transactionType.code === 'loanTransactionType.capitalizedIncomeAmortization'
+    );
   }
 
   private isReAgoeOrReAmortize(transactionType: LoanTransactionType): boolean {

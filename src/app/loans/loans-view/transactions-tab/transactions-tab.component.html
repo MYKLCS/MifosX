@@ -153,7 +153,7 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #transactionMenu="matMenu">
-          <span *ngIf="!isReAgoeOrReAmortize(transaction.type)">
+          <span *ngIf="showTransaction(transaction)">
             <button mat-menu-item (click)="showTransactions(transaction)">
               <mat-icon><fa-icon icon="eye" size="sm"></fa-icon></mat-icon>
               <span>{{ 'labels.text.View Transaction' | translate }}</span>

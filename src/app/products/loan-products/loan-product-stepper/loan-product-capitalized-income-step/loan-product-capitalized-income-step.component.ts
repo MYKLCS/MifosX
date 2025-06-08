@@ -54,7 +54,9 @@ export class LoanProductCapitalizedIncomeStepComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.enableIncomeCapitalization = this.capitalizedIncome.enableIncomeCapitalization;
+    this.enableIncomeCapitalization = this.capitalizedIncome
+      ? this.capitalizedIncome.enableIncomeCapitalization
+      : false;
     if (this.enableIncomeCapitalization) {
       this.loanIncomeCapitalizationForm.patchValue({
         enableIncomeCapitalization: this.enableIncomeCapitalization,

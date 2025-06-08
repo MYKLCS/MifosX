@@ -129,7 +129,8 @@ export class CreateReportComponent implements OnInit {
     this.dataForDialog.parameterName = undefined;
     this.dataForDialog.reportParameterName = undefined;
     const addReportParameterDialogRef = this.dialog.open(ReportParameterDialogComponent, {
-      data: this.dataForDialog
+      data: { ...this.dataForDialog, layout: { addButtonText: 'Add' } },
+      width: '25rem'
     });
     addReportParameterDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
