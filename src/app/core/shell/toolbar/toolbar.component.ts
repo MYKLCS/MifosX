@@ -29,6 +29,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 /** Custom Components */
 import { ConfigurationWizardComponent } from '../../../configuration-wizard/configuration-wizard.component';
 import { NotificationsTrayComponent } from 'app/shared/notifications-tray/notifications-tray.component';
+import { HealthIndicatorComponent } from '../../health-indicator.component';
 
 /**
  * Toolbar component.

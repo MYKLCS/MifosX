@@ -3,7 +3,7 @@
 export default {
   'mifos_x': {
     'version': '250609',
-    'hash': 'a57fe98e'
+    'hash': 'c4280ca4'
   },
   'allow_switching_backend_instance': true
 };
