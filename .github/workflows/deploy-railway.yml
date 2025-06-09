@@ -3,12 +3,13 @@ name: Deploy to Railway
 on:
   push:
     branches:
+      - main
       - dev
       - develop
   pull_request:
     branches:
+      - main
       - dev
-      - develop
 
 env:
   NODE_VERSION: '22.9.0'
@@ -85,7 +86,7 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
   deploy-production:
-    if: github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/main'
     needs: [test, security]
     runs-on: ubuntu-latest
     environment: production
