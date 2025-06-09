@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MifosX Railway Health Check</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .status-item {
+        margin: 15px 0;
+        padding: 10px;
+        border-radius: 5px;
+        border-left: 4px solid #ccc;
+      }
+      .status-ok {
+        border-left-color: #4caf50;
+        background-color: #f1f8e9;
+      }
+      .status-error {
+        border-left-color: #f44336;
+        background-color: #ffebee;
+      }
+      .status-warning {
+        border-left-color: #ff9800;
+        background-color: #fff3e0;
+      }
+      .status-checking {
+        border-left-color: #2196f3;
+        background-color: #e3f2fd;
+      }
+      .timestamp {
+        font-size: 0.9em;
+        color: #666;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🚀 MifosX Railway Health Check</h1>
+
+      <div class="status-item status-ok">
+        <h3>Frontend Service</h3>
+        <p>Status: ✅ Running</p>
+        <p>URL: <span id="frontend-url">Loading...</span></p>
+      </div>
+
+      <div class="status-item" id="backend-status">
+        <h3>Fineract Backend Service</h3>
+        <p>Status: <span id="backend-text">🔄 Checking Railway connection...</span></p>
+        <p>URL: <span id="backend-url">http://fineract.railway.internal:8080</span></p>
+      </div>
+
+      <div class="status-item" id="network-status">
+        <h3>Railway Internal Networking</h3>
+        <p>Connection: <span id="network-text">🔄 Testing...</span></p>
+        <p>Service Discovery: <span id="discovery-text">Checking...</span></p>
+      </div>
+
+      <div class="timestamp">Last checked: <span id="last-check">Loading...</span></div>
+    </div>
+
+    <script>
+      let checkCount = 0;
+
+      function updateTimestamp() {
+        document.getElementById('last-check').textContent = new Date().toLocaleString();
+      }
+
+      function updateFrontendInfo() {
+        document.getElementById('frontend-url').textContent = window.location.origin;
+      }
+
+      async function checkBackendHealth() {
+        const backendStatus = document.getElementById('backend-status');
+        const backendText = document.getElementById('backend-text');
+        const networkStatus = document.getElementById('network-status');
+        const networkText = document.getElementById('network-text');
+        const discoveryText = document.getElementById('discovery-text');
+
+        checkCount++;
+        console.log(`Health check #${checkCount} started`);
+
+        try {
+          // Test Railway internal networking
+          networkText.textContent = '🔄 Testing Railway internal DNS...';
+          discoveryText.textContent = 'Resolving fineract.railway.internal...';
+
+          const response = await fetch('/fineract-provider/api/v1/configuration', {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            timeout: 15000
+          });
+
+          if (response.ok) {
+            backendStatus.className = 'status-item status-ok';
+            backendText.textContent = '✅ Connected to Fineract Backend';
+            networkStatus.className = 'status-item status-ok';
+            networkText.textContent = '✅ Railway internal networking working';
+            discoveryText.textContent = 'Service discovery successful';
+            console.log('Railway connection: SUCCESS');
+          } else {
+            backendStatus.className = 'status-item status-warning';
+            backendText.textContent = `⚠️ Backend responded with status ${response.status}`;
+            networkStatus.className = 'status-item status-warning';
+            networkText.textContent = '⚠️ Connection established but response unexpected';
+            discoveryText.textContent = 'Service reachable but may have issues';
+            console.log('Railway connection: Partial success, status:', response.status);
+          }
+        } catch (error) {
+          backendStatus.className = 'status-item status-error';
+          backendText.textContent = '❌ Cannot reach Fineract Backend';
+          networkStatus.className = 'status-item status-error';
+          networkText.textContent = '❌ Railway internal networking issue';
+          discoveryText.textContent = 'Service discovery failed';
+          console.error('Railway connection error:', error);
+        }
+
+        updateTimestamp();
+      }
+
+      // Initialize
+      updateFrontendInfo();
+      updateTimestamp();
+
+      // Start health checks
+      checkBackendHealth();
+
+      // Check every 30 seconds
+      setInterval(checkBackendHealth, 30000);
+
+      console.log('MifosX Railway Health Check initialized');
+    </script>
+  </body>
+</html>
