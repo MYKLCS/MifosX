@@ -185,3 +185,41 @@ Railway deployment secrets have been added to GitHub repository.
 
 - **Frontend**: https://mifosx-production.up.railway.app
 - **Backend**: https://fineract-production.up.railway.app
+- **Health Check**: https://mifosx-production.up.railway.app/assets/health.html
+
+### 🏥 **Healthcheck Status - Mon Jun 9 2025:**
+
+- ✅ Docker healthcheck added to Dockerfile
+- ✅ Curl-based health monitoring (30s intervals, 10s timeout, 3 retries)
+- ✅ Railway service health monitoring active
+- ✅ Frontend-backend connectivity verification endpoint
+- 🔄 **Railway internal networking configured for service connections**
+
+### 🔗 **Railway Service Connections:**
+
+Railway services are connected via internal networking variables:
+
+- `FINERACT_HOST`: `fineract.railway.internal`
+- `FINERACT_BASE_URL`: `http://fineract.railway.internal:8080/fineract-provider`
+- `FINERACT_API_URL`: `http://fineract.railway.internal:8080/fineract-provider`
+
+**Connection arrows should be visible in Railway dashboard due to internal service references.**
+
+## ✅ Healthcheck Added - Mon Jun 9 13:50:00 SAST 2025
+
+Docker healthcheck and monitoring endpoints have been added to improve Railway service connections.
+
+### 🏥 **Healthcheck Features:**
+
+- ✅ **Docker Healthcheck**: Added to Dockerfile with curl-based health monitoring
+- ✅ **Health Endpoint**: Created `/assets/health.html` for service verification
+- ✅ **Service Monitoring**: Railway can now properly monitor service health
+- ✅ **Connection Arrows**: Internal networking configured for Railway dashboard visualization
+
+### 🔗 **Railway Service Connections:**
+
+- ✅ `FINERACT_HOST`: `fineract.railway.internal`
+- ✅ `FINERACT_BASE_URL`: `http://fineract.railway.internal:8080/fineract-provider`
+- ✅ `FINERACT_API_URL`: `http://fineract.railway.internal:8080/fineract-provider`
+
+**Connection arrows should now be visible in Railway dashboard showing MifosX → Fineract service dependency.**

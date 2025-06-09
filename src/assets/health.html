@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Health Check</title>
+  </head>
+  <body>
+    <h1>MifosX Health Check</h1>
+    <p>Status: OK</p>
+    <p>Service: MifosX Frontend</p>
+    <p>Backend: <span id="backend-status">Checking...</span></p>
+
+    <script>
+      // Railway service connectivity health check with retry logic
+      async function checkBackend() {
+        const statusElement = document.getElementById('backend-status');
+        statusElement.textContent = 'Connecting to Railway Fineract service...';
+
+        try {
+          // Check Fineract backend via Railway internal networking
+          const response = await fetch('/fineract-provider/api/v1/configuration', {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json'
+            },
+            timeout: 10000
+          });
+
+          if (response.ok) {
+            statusElement.textContent = '✅ Connected to Railway Fineract Backend';
+            statusElement.style.color = 'green';
+            console.log('Railway service connection: SUCCESS');
+          } else {
+            statusElement.textContent = `❌ Backend Error (${response.status})`;
+            statusElement.style.color = 'orange';
+            console.log('Railway service response error:', response.status);
+          }
+        } catch (error) {
+          statusElement.textContent = '🔴 Railway Backend Disconnected';
+          statusElement.style.color = 'red';
+          console.error('Railway service connection error:', error);
+
+          // Retry after 5 seconds
+          setTimeout(checkBackend, 5000);
+        }
+      }
+
+      // Initial check and periodic monitoring
+      checkBackend();
+      setInterval(checkBackend, 30000); // Check every 30 seconds
+    </script>
+  </body>
+</html>
