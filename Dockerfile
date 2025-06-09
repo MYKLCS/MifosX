@@ -43,7 +43,14 @@ FROM $NGINX_IMAGE
 
 COPY --from=builder /dist /usr/share/nginx/html
 
+# Install curl for healthcheck
+RUN apk add --no-cache curl
+
 EXPOSE 80
+
+# Add healthcheck to ensure the service is running properly
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:80/ || exit 1
 
 # When the container starts, replace the env.js with values from environment variables
 CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
